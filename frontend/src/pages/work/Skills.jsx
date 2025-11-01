@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import SkillCard from './SkillCard'
 import SkillModal from './SkillModal'
@@ -8,6 +9,7 @@ import styles from './Skills.module.css'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
 function Skills() {
+  const navigate = useNavigate()
   const [skills, setSkills] = useState([])
   const [showSkillModal, setShowSkillModal] = useState(false)
   const [editingSkill, setEditingSkill] = useState(null)
@@ -93,14 +95,24 @@ function Skills() {
     <div className={styles.skills}>
       <div className={styles.header}>
         <h1 className={styles.title}>Skills</h1>
-        <button
-          className={styles.addButton}
-          onClick={handleCreateSkill}
-          aria-label="Add new skill"
-          tabIndex={0}
-        >
-          + Add Skill
-        </button>
+        <div className={styles.headerActions}>
+          <button
+            className={styles.backButton}
+            onClick={() => navigate('/work/desk')}
+            aria-label="Back to WorkDesk"
+            tabIndex={0}
+          >
+            ← WorkDesk
+          </button>
+          <button
+            className={styles.addButton}
+            onClick={handleCreateSkill}
+            aria-label="Add new skill"
+            tabIndex={0}
+          >
+            + Add Skill
+          </button>
+        </div>
       </div>
 
       {error && <div className={styles.error}>{error}</div>}

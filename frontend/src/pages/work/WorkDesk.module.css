@@ -29,6 +29,29 @@
   gap: 1rem;
 }
 
+.skillsButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.skillsButton:hover {
+  transform: translateY(-2px);
+}
+
+.skillsButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
 .pomodoroButton {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1rem;

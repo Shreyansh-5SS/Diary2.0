@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import TaskModal from './TaskModal'
 import TaskDetail from './TaskDetail'
@@ -10,6 +11,7 @@ import styles from './WorkDesk.module.css'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
 function WorkDesk() {
+  const navigate = useNavigate()
   const [tasks, setTasks] = useState({
     backlog: [],
     in_progress: [],
@@ -176,6 +178,14 @@ function WorkDesk() {
       <div className={styles.header}>
         <h1 className={styles.title}>WorkDesk</h1>
         <div className={styles.headerActions}>
+          <button
+            className={styles.skillsButton}
+            onClick={() => navigate('/work/skills')}
+            aria-label="Go to Skills"
+            tabIndex={0}
+          >
+            📚 Skills
+          </button>
           <button
             className={styles.pomodoroButton}
             onClick={() => setShowPomodoro(true)}
