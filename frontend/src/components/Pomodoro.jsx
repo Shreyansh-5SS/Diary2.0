@@ -33,7 +33,12 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
           if (prev === 0) {
             setMinutes(prevMin => {
               if (prevMin === 0) {
-                handleComplete()
+                // Timer completed - stop immediately to prevent double execution
+                clearInterval(intervalRef.current)
+                setIsRunning(false)
+                setIsPaused(false)
+                // Call handleComplete after state updates
+                setTimeout(() => handleComplete(), 0)
                 return 0
               }
               return prevMin - 1
@@ -57,12 +62,6 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
   }, [isRunning, isPaused, tickSoundEnabled])
 
   const handleComplete = async () => {
-    setIsRunning(false)
-    setIsPaused(false)
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current)
-    }
-    
     // Auto-save the completed session
     if (startTime) {
       const endTime = new Date().toISOString()
