@@ -1,7 +1,7 @@
 import cron from 'node-cron'
 import nodemailer from 'nodemailer'
 import knex from 'knex'
-import knexConfig from './knexfile.js'
+import knexConfig from '../knexfile.js'
 
 const db = knex(knexConfig.development)
 
