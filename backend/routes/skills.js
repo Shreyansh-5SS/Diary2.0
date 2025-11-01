@@ -1,7 +1,7 @@
 import express from 'express'
 import knex from 'knex'
 import knexConfig from '../knexfile.js'
-import authMiddleware from '../middleware/auth.js'
+import { authMiddleware } from '../middleware/auth.js'
 
 const router = express.Router()
 const db = knex(knexConfig.development)
