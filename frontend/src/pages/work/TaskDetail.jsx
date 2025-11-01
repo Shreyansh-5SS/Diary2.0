@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import styles from './TaskDetail.module.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
-function TaskDetail({ task, onClose, onEdit, onDelete, onUpdate }) {
+function TaskDetail({ task, onClose, onEdit, onDelete, onUpdate, onStartPomodoro }) {
   const [currentStatus, setCurrentStatus] = useState(task.status)
   const [updating, setUpdating] = useState(false)
 
@@ -167,13 +166,15 @@ function TaskDetail({ task, onClose, onEdit, onDelete, onUpdate }) {
           <div className={styles.section}>
             <h4 className={styles.sectionTitle}>Actions</h4>
             <div className={styles.actions}>
-              <Link
-                to="/home/pomodoro"
-                className={styles.pomodoroButton}
-                tabIndex={0}
-              >
-                🍅 Start Pomodoro
-              </Link>
+              {onStartPomodoro && (
+                <button
+                  className={styles.pomodoroButton}
+                  onClick={onStartPomodoro}
+                  tabIndex={0}
+                >
+                  🍅 Start Pomodoro
+                </button>
+              )}
               <button
                 className={styles.editButton}
                 onClick={() => onEdit(task)}

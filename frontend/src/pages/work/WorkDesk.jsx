@@ -3,6 +3,8 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
 import TaskModal from './TaskModal'
 import TaskDetail from './TaskDetail'
+import Pomodoro from '../../components/Pomodoro'
+import SkillStats from '../../components/SkillStats'
 import styles from './WorkDesk.module.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
@@ -16,6 +18,8 @@ function WorkDesk() {
   const [showTaskModal, setShowTaskModal] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
   const [selectedTask, setSelectedTask] = useState(null)
+  const [showPomodoro, setShowPomodoro] = useState(false)
+  const [pomodoroTask, setPomodoroTask] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -110,6 +114,11 @@ function WorkDesk() {
     setShowTaskModal(true)
   }
 
+  const handleStartPomodoro = () => {
+    setPomodoroTask(selectedTask)
+    setShowPomodoro(true)
+  }
+
   const handleEditTask = (task) => {
     setEditingTask(task)
     setShowTaskModal(true)
@@ -166,17 +175,30 @@ function WorkDesk() {
     <div className={styles.workDesk}>
       <div className={styles.header}>
         <h1 className={styles.title}>WorkDesk</h1>
-        <button
-          className={styles.addButton}
-          onClick={handleCreateTask}
-          aria-label="Add new task"
-          tabIndex={0}
-        >
-          + Add Task
-        </button>
+        <div className={styles.headerActions}>
+          <button
+            className={styles.pomodoroButton}
+            onClick={() => setShowPomodoro(true)}
+            aria-label="Start Pomodoro"
+            tabIndex={0}
+          >
+            🍅 Pomodoro
+          </button>
+          <button
+            className={styles.addButton}
+            onClick={handleCreateTask}
+            aria-label="Add new task"
+            tabIndex={0}
+          >
+            + Add Task
+          </button>
+        </div>
       </div>
 
       {error && <div className={styles.error}>{error}</div>}
+
+      {/* Skill Stats Panel */}
+      <SkillStats />
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className={styles.board}>
@@ -382,7 +404,20 @@ function WorkDesk() {
           onEdit={handleEditTask}
           onDelete={handleDeleteTask}
           onUpdate={fetchTasks}
+          onStartPomodoro={handleStartPomodoro}
         />
+      )}
+
+      {showPomodoro && (
+        <div className={styles.pomodoroOverlay}>
+          <Pomodoro
+            selectedTask={pomodoroTask}
+            onClose={() => {
+              setShowPomodoro(false)
+              setPomodoroTask(null)
+            }}
+          />
+        </div>
       )}
     </div>
   )

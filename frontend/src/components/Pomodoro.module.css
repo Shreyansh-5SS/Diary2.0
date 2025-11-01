@@ -1,0 +1,299 @@
+/* Pomodoro Timer - Brutalist Design */
+
+.pomodoro {
+  background: white;
+  border: 3px solid #1a1a1a;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+}
+
+.closeButton:focus {
+  outline: 2px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.association {
+  background: #fef3c7;
+  border: 2px solid #1a1a1a;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.associationLabel {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.associationValue {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.display {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #f3f4f6;
+  border: 2px solid #1a1a1a;
+}
+
+.timer {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.1em;
+}
+
+.status {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 600;
+}
+
+.presets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.presetButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 1rem;
+  background: white;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.presetButton:hover:not(:disabled) {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.presetButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.presetButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.presetButton.active {
+  background: #1a1a1a;
+  color: white;
+}
+
+.presetMins {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.custom {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.customInput {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #1a1a1a;
+  background: white;
+  color: #1a1a1a;
+}
+
+.customInput:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.customInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.customButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.customButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.customButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.customButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.startButton,
+.pauseButton,
+.stopButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex: 1;
+}
+
+.startButton {
+  background: #16a34a;
+  color: white;
+  border-color: #16a34a;
+}
+
+.pauseButton {
+  background: #ca8a04;
+  color: white;
+  border-color: #ca8a04;
+}
+
+.stopButton {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+.startButton:hover,
+.pauseButton:hover,
+.stopButton:hover {
+  transform: translateY(-2px);
+}
+
+.startButton:focus,
+.pauseButton:focus,
+.stopButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.options {
+  padding-top: 1.5rem;
+  border-top: 2px solid #1a1a1a;
+}
+
+.optionLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.optionLabel input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.optionLabel input[type="checkbox"]:focus {
+  outline: 2px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.optionLabel span {
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pomodoro {
+    padding: 1.5rem;
+  }
+
+  .timer {
+    font-size: 3rem;
+  }
+
+  .presets {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+}
