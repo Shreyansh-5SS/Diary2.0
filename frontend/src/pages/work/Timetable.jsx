@@ -42,7 +42,7 @@ function Timetable() {
       setSlots(response.data)
     } catch (err) {
       console.error('Error fetching timetable:', err)
-      alert('Failed to load timetable')
+      // Don't show alert on initial load, just log the error
     } finally {
       setLoading(false)
     }
@@ -58,7 +58,7 @@ function Timetable() {
       )
       
       if (response.data.suggestions.length === 0) {
-        alert(response.data.message || 'No suggestions available')
+        alert(response.data.message || 'No suggestions available. Add free time slots and tasks with estimates first.')
         return
       }
 
@@ -66,7 +66,7 @@ function Timetable() {
       setShowSuggestions(true)
     } catch (err) {
       console.error('Error getting suggestions:', err)
-      alert('Failed to generate suggestions')
+      alert(err.response?.data?.error || 'Failed to generate suggestions')
     }
   }
 
