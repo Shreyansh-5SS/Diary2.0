@@ -4,8 +4,8 @@ import { useAuth } from '../context/AuthContext'
 import styles from '../styles/Login.module.css'
 
 export default function Login() {
-  const [email, setEmail] = useState('demo@local')
-  const [password, setPassword] = useState('demo123')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   
@@ -48,7 +48,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={styles.input}
-              placeholder="demo@local"
+              placeholder="your.email@gmail.com"
               required
               autoComplete="email"
             />
@@ -64,7 +64,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
-              placeholder="demo123"
+              placeholder="Enter your password"
               required
               autoComplete="current-password"
             />
@@ -84,12 +84,6 @@ export default function Login() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-
-        <div className={styles.demo}>
-          <p className={styles.demoTitle}>Demo Credentials:</p>
-          <p className={styles.demoText}>Email: demo@local</p>
-          <p className={styles.demoText}>Password: demo123</p>
-        </div>
       </div>
     </div>
   )
