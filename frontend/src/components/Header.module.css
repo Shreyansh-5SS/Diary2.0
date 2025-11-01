@@ -8,6 +8,12 @@
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border-color, #1a1a1a);
   z-index: 1000;
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.headerHidden {
+  transform: translateY(-100%);
 }
 
 .container {

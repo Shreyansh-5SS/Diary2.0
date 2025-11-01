@@ -4,7 +4,32 @@ import styles from './Header.module.css'
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const location = useLocation()
+
+  // Handle scroll to show/hide header
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY < 10) {
+        // Always show at top
+        setIsVisible(true)
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down - hide
+        setIsVisible(false)
+      } else {
+        // Scrolling up - show
+        setIsVisible(true)
+      }
+
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   // Close menu on route change
   useEffect(() => {
@@ -47,7 +72,10 @@ function Header() {
 
   return (
     <>
-      <header className={styles.header} role="banner">
+      <header 
+        className={`${styles.header} ${!isVisible ? styles.headerHidden : ''}`} 
+        role="banner"
+      >
         <div className={styles.container}>
           <Link 
             to="/" 

@@ -28,8 +28,8 @@ function Layout({ children }) {
     }
   }, [location])
 
-  // Don't show header on landing page
-  const showHeader = location.pathname !== '/'
+  // Don't show header on landing page and login page
+  const showHeader = location.pathname !== '/' && location.pathname !== '/login'
 
   return (
     <div className={styles.layoutWrapper}>
