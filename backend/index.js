@@ -2,11 +2,19 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import authRoutes from './routes/authRoutes.js'
+import diaryRoutes from './routes/diaryRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 import { authMiddleware } from './middleware/auth.js'
 import { getCurrentUser } from './controllers/authController.js'
 
 dotenv.config()
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -20,6 +28,9 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Serve static uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ ok: true })
@@ -27,6 +38,8 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes)
+app.use('/api/diary', diaryRoutes)
+app.use('/api/uploads', uploadRoutes)
 app.get('/api/me', authMiddleware, getCurrentUser)
 
 // Error handler
