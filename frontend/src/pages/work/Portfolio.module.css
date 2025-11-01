@@ -23,6 +23,16 @@
   margin-bottom: 2rem;
 }
 
+.portrait {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
 .portraitPlaceholder {
   width: 180px;
   height: 180px;

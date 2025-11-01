@@ -89,9 +89,11 @@ export default function Portfolio() {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <div className={styles.portraitContainer}>
-            <div className={styles.portraitPlaceholder}>
-              <span className={styles.initials}>SS</span>
-            </div>
+            <img 
+              src="/portrait.jpg" 
+              alt="Shreyansh Singh Portrait"
+              className={styles.portrait}
+            />
           </div>
           
           <h1 className={styles.displayName}>Shreyansh Singh</h1>
