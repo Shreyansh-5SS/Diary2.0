@@ -13,8 +13,10 @@ import tasksRoutes from './routes/tasks.js'
 import pomodoroRoutes from './routes/pomodoro.js'
 import skillsRoutes from './routes/skills.js'
 import timetableRoutes from './routes/timetable.js'
+import emailRoutes from './routes/email.js'
 import { authMiddleware } from './middleware/auth.js'
 import { getCurrentUser } from './controllers/authController.js'
+import { startReminderCron } from './services/reminderService.js'
 
 dotenv.config()
 
@@ -53,6 +55,7 @@ app.use('/api/tasks', tasksRoutes)
 app.use('/api/pomodoro', pomodoroRoutes)
 app.use('/api/skills', skillsRoutes)
 app.use('/api/timetable', timetableRoutes)
+app.use('/api/email', emailRoutes)
 app.use('/api/uploads', uploadRoutes)
 app.get('/api/me', authMiddleware, getCurrentUser)
 
@@ -74,6 +77,9 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`)
   console.log(`📊 Health check: http://localhost:${PORT}/health`)
+  
+  // Start reminder cron job
+  startReminderCron()
 })
 
 export default app

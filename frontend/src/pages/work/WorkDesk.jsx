@@ -23,6 +23,7 @@ function WorkDesk() {
   const [pomodoroTask, setPomodoroTask] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [testEmailStatus, setTestEmailStatus] = useState(null)
 
   useEffect(() => {
     fetchTasks()
@@ -164,6 +165,26 @@ function WorkDesk() {
     }
   }
 
+  const handleTestEmail = async () => {
+    try {
+      setTestEmailStatus('sending')
+      const token = localStorage.getItem('token')
+      const response = await axios.post(
+        `${API_URL}/api/email/test-email`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      setTestEmailStatus('success')
+      alert(`Test email sent! Mode: ${response.data.mode}\nCheck server console for output.`)
+      setTimeout(() => setTestEmailStatus(null), 3000)
+    } catch (err) {
+      console.error('Error sending test email:', err)
+      setTestEmailStatus('error')
+      alert('Failed to send test email. Check console for details.')
+      setTimeout(() => setTestEmailStatus(null), 3000)
+    }
+  }
+
   if (loading) {
     return (
       <div className={styles.workDesk}>
@@ -177,6 +198,16 @@ function WorkDesk() {
       <div className={styles.header}>
         <h1 className={styles.title}>WorkDesk</h1>
         <div className={styles.headerActions}>
+          <button
+            className={styles.testEmailButton}
+            onClick={handleTestEmail}
+            disabled={testEmailStatus === 'sending'}
+            aria-label="Test email reminder"
+            tabIndex={0}
+            title="Send test reminder email (check server console)"
+          >
+            {testEmailStatus === 'sending' ? '⏳' : testEmailStatus === 'success' ? '✅' : testEmailStatus === 'error' ? '❌' : '📧'} Test Email
+          </button>
           <button
             className={styles.skillsButton}
             onClick={() => navigate('/work/skills')}

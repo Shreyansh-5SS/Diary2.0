@@ -75,6 +75,34 @@
   outline-offset: 2px;
 }
 
+.testEmailButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  background: #fef3c7;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.testEmailButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.testEmailButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.testEmailButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .pomodoroButton {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1rem;
