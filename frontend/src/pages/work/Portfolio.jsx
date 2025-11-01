@@ -4,6 +4,23 @@ import styles from './Portfolio.module.css'
 export default function Portfolio() {
   const navigate = useNavigate()
 
+  const education = [
+    {
+      institution: "Nitte Meenakshi Institute of Technology, Bengaluru",
+      degree: "Bachelor of Engineering in Computer Science and Engineering",
+      duration: "Expected Graduation: May 2027",
+      cgpa: "CGPA: 9.15",
+      coursework: "Object-Oriented Programming, Database Management Systems, Web Technologies, Data Structures"
+    },
+    {
+      institution: "Dr. Virendra Swarup Education Centre, Avadhpuri, Kanpur",
+      degree: "Higher Secondary Education",
+      duration: "2019 - 2021",
+      cgpa: "Class X: 96.6% | Class XII: 94%",
+      coursework: null
+    }
+  ]
+
   const projects = [
     {
       title: "Shreyansh Personal Diary",
@@ -29,15 +46,36 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: "Java", level: 75 },
-    { name: "Data Structures & Algorithms", level: 75 },
-    { name: "React", level: 70 },
-    { name: "Node.js & Express", level: 70 },
-    { name: "HTML & CSS", level: 80 },
-    { name: "JavaScript", level: 70 },
-    { name: "MySQL & SQLite", level: 65 },
-    { name: "Python", level: 60 },
-    { name: "C++", level: 65 }
+    "Java", "Data Structures & Algorithms", "React", "Node.js", "Express", 
+    "HTML", "CSS", "JavaScript", "MySQL", "SQLite", "Python", "C++"
+  ]
+
+  const certifications = [
+    "NPTEL: Blockchain and its Applications",
+    "Infosys Springboard: Java Foundation Course",
+    "Certificate of Completion: Additive Manufacturing Designer & Industry 4.0",
+    "IEEE GRS & NMIT: UAV Data Analysis Workshop"
+  ]
+
+  const achievements = [
+    "School Rank 5 in National Science Olympiad, 2012",
+    "Winner at Hostel's Got Latent (Cultural event), NMIT",
+    "Winner at Acoustic Battle of Bands, NMIT"
+  ]
+
+  const activities = [
+    {
+      title: "Nmit Hacks, Social Media Team",
+      description: "Co-organized a 48hr National level hackathon, managing logistics for 200+ participants to promote tech innovation."
+    },
+    {
+      title: "MusicClub NMIT",
+      description: "Performed at Anadyanta (annual fest) and participated in various flash mobs and festive events throughout college."
+    },
+    {
+      title: "Xfactor Club, NMIT",
+      description: "Coordinated a cultural event named 'Among Us' during the annual fest."
+    }
   ]
 
   const handleEnterWorkDesk = () => {
@@ -71,18 +109,46 @@ export default function Portfolio() {
             onClick={handleEnterWorkDesk}
             className={styles.ctaButton}
             aria-label="Navigate to WorkDesk"
+            tabIndex={0}
           >
             Enter WorkDesk →
           </button>
         </div>
       </section>
 
+      {/* Education Section */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Education</h2>
+          </div>
+
+          <div className={styles.educationList}>
+            {education.map((edu, index) => (
+              <article key={index} className={styles.educationCard}>
+                <h3 className={styles.institution}>{edu.institution}</h3>
+                <p className={styles.degree}>{edu.degree}</p>
+                <p className={styles.duration}>{edu.duration}</p>
+                <p className={styles.cgpa}>{edu.cgpa}</p>
+                {edu.coursework && (
+                  <p className={styles.coursework}>
+                    <strong>Relevant Coursework:</strong> {edu.coursework}
+                  </p>
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Projects Section */}
-      <section className={styles.projectsSection}>
-        <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}>Projects</h2>
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Projects</h2>
+          </div>
           
-          <div className={styles.projectsGrid}>
+          <div className={styles.projectsList}>
             {projects.map((project, index) => (
               <article key={index} className={styles.projectCard}>
                 <h3 className={styles.projectTitle}>{project.title}</h3>
@@ -94,7 +160,7 @@ export default function Portfolio() {
                   ))}
                 </div>
 
-                <div className={styles.projectLinks}>
+                <div className={styles.projectActions}>
                   {project.github && (
                     <a 
                       href={project.github}
@@ -102,8 +168,9 @@ export default function Portfolio() {
                       rel="noopener noreferrer"
                       className={styles.projectLink}
                       aria-label={`View ${project.title} on GitHub`}
+                      tabIndex={0}
                     >
-                      GitHub →
+                      View on GitHub →
                     </a>
                   )}
                   {project.live && (
@@ -113,6 +180,7 @@ export default function Portfolio() {
                       rel="noopener noreferrer"
                       className={styles.projectLink}
                       aria-label={`View live demo of ${project.title}`}
+                      tabIndex={0}
                     >
                       Live Demo →
                     </a>
@@ -125,47 +193,95 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section className={styles.skillsSection}>
-        <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}>Technical Skills</h2>
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Technical Skills</h2>
+          </div>
           
           <div className={styles.skillsGrid}>
             {skills.map((skill, index) => (
-              <div key={index} className={styles.skillItem}>
-                <div className={styles.skillHeader}>
-                  <span className={styles.skillName}>{skill.name}</span>
-                  <span className={styles.skillLevel}>{skill.level}%</span>
-                </div>
-                <div className={styles.skillBarContainer}>
-                  <div 
-                    className={styles.skillBar}
-                    style={{ width: `${skill.level}%` }}
-                    role="progressbar"
-                    aria-valuenow={skill.level}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  />
-                </div>
+              <div key={index} className={styles.skillChip}>
+                {skill}
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Certifications Section */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Certifications</h2>
+          </div>
+
+          <ul className={styles.listItems}>
+            {certifications.map((cert, index) => (
+              <li key={index} className={styles.listItem}>
+                <span className={styles.bullet}>•</span>
+                <span className={styles.itemText}>{cert}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Achievements Section */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Achievements</h2>
+          </div>
+
+          <ul className={styles.listItems}>
+            {achievements.map((achievement, index) => (
+              <li key={index} className={styles.listItem}>
+                <span className={styles.bullet}>🏆</span>
+                <span className={styles.itemText}>{achievement}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Extracurricular Activities Section */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Extracurricular Activities</h2>
+          </div>
+
+          <div className={styles.activitiesList}>
+            {activities.map((activity, index) => (
+              <article key={index} className={styles.activityCard}>
+                <h3 className={styles.activityTitle}>{activity.title}</h3>
+                <p className={styles.activityDescription}>{activity.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
-      <section className={styles.contactSection}>
-        <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}>Get In Touch</h2>
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Contact</h2>
+          </div>
           
           <div className={styles.contactGrid}>
             <a 
               href="mailto:singhshreyansh0505@gmail.com"
               className={styles.contactCard}
               aria-label="Send email to Shreyansh Singh"
+              tabIndex={0}
             >
-              <div className={styles.contactIcon}>✉️</div>
-              <div className={styles.contactLabel}>Email</div>
-              <div className={styles.contactValue}>singhshreyansh0505@gmail.com</div>
+              <div className={styles.contactIcon}>📧</div>
+              <div className={styles.contactInfo}>
+                <div className={styles.contactLabel}>Email</div>
+                <div className={styles.contactValue}>singhshreyansh0505@gmail.com</div>
+              </div>
             </a>
 
             <a 
@@ -174,10 +290,13 @@ export default function Portfolio() {
               rel="noopener noreferrer"
               className={styles.contactCard}
               aria-label="View GitHub profile"
+              tabIndex={0}
             >
               <div className={styles.contactIcon}>💻</div>
-              <div className={styles.contactLabel}>GitHub</div>
-              <div className={styles.contactValue}>Shreyansh-5SS</div>
+              <div className={styles.contactInfo}>
+                <div className={styles.contactLabel}>GitHub</div>
+                <div className={styles.contactValue}>Shreyansh-5SS</div>
+              </div>
             </a>
 
             <a 
@@ -186,27 +305,25 @@ export default function Portfolio() {
               rel="noopener noreferrer"
               className={styles.contactCard}
               aria-label="View LinkedIn profile"
+              tabIndex={0}
             >
               <div className={styles.contactIcon}>🔗</div>
-              <div className={styles.contactLabel}>LinkedIn</div>
-              <div className={styles.contactValue}>Shreyansh Singh</div>
+              <div className={styles.contactInfo}>
+                <div className={styles.contactLabel}>LinkedIn</div>
+                <div className={styles.contactValue}>Shreyansh Singh</div>
+              </div>
             </a>
 
             <div className={styles.contactCard}>
               <div className={styles.contactIcon}>📱</div>
-              <div className={styles.contactLabel}>Phone</div>
-              <div className={styles.contactValue}>+91 9026622912</div>
+              <div className={styles.contactInfo}>
+                <div className={styles.contactLabel}>Phone</div>
+                <div className={styles.contactValue}>+91 9026622912</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <p className={styles.footerText}>
-          © 2025 Shreyansh Singh. Computer Science Engineering Student at NMIT Bengaluru.
-        </p>
-      </footer>
     </div>
   )
 }
