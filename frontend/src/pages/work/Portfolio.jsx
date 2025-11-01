@@ -46,8 +46,18 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    "Java", "Data Structures & Algorithms", "React", "Node.js", "Express", 
-    "HTML", "CSS", "JavaScript", "MySQL", "SQLite", "Python", "C++"
+    { name: "Java", color: "#b07219" },
+    { name: "JavaScript", color: "#f1e05a" },
+    { name: "Python", color: "#3572A5" },
+    { name: "C++", color: "#f34b7d" },
+    { name: "React", color: "#61dafb" },
+    { name: "Node.js", color: "#339933" },
+    { name: "Express", color: "#000000" },
+    { name: "HTML", color: "#e34c26" },
+    { name: "CSS", color: "#563d7c" },
+    { name: "MySQL", color: "#4479a1" },
+    { name: "SQLite", color: "#003b57" },
+    { name: "Data Structures & Algorithms", color: "#ff6b6b" }
   ]
 
   const certifications = [
@@ -64,18 +74,9 @@ export default function Portfolio() {
   ]
 
   const activities = [
-    {
-      title: "Nmit Hacks, Social Media Team",
-      description: "Co-organized a 48hr National level hackathon, managing logistics for 200+ participants to promote tech innovation."
-    },
-    {
-      title: "MusicClub NMIT",
-      description: "Performed at Anadyanta (annual fest) and participated in various flash mobs and festive events throughout college."
-    },
-    {
-      title: "Xfactor Club, NMIT",
-      description: "Coordinated a cultural event named 'Among Us' during the annual fest."
-    }
+    "Nmit Hacks, Social Media Team: Co-organized a 48hr National level hackathon, managing logistics for 200+ participants to promote tech innovation.",
+    "MusicClub NMIT: Performed at Anadyanta (annual fest) and participated in various flash mobs and festive events throughout college.",
+    "Xfactor Club, NMIT: Coordinated a cultural event named 'Among Us' during the annual fest."
   ]
 
   const handleEnterWorkDesk = () => {
@@ -201,8 +202,15 @@ export default function Portfolio() {
           
           <div className={styles.skillsGrid}>
             {skills.map((skill, index) => (
-              <div key={index} className={styles.skillChip}>
-                {skill}
+              <div 
+                key={index} 
+                className={styles.skillChip}
+                style={{ 
+                  backgroundColor: skill.color,
+                  color: skill.color === '#f1e05a' || skill.color === '#61dafb' ? '#000' : '#fff'
+                }}
+              >
+                {skill.name}
               </div>
             ))}
           </div>
@@ -216,12 +224,9 @@ export default function Portfolio() {
             <h2 className={styles.title}>Certifications</h2>
           </div>
 
-          <ul className={styles.listItems}>
+          <ul className={styles.simpleList}>
             {certifications.map((cert, index) => (
-              <li key={index} className={styles.listItem}>
-                <span className={styles.bullet}>•</span>
-                <span className={styles.itemText}>{cert}</span>
-              </li>
+              <li key={index}>{cert}</li>
             ))}
           </ul>
         </div>
@@ -234,12 +239,9 @@ export default function Portfolio() {
             <h2 className={styles.title}>Achievements</h2>
           </div>
 
-          <ul className={styles.listItems}>
+          <ul className={styles.simpleList}>
             {achievements.map((achievement, index) => (
-              <li key={index} className={styles.listItem}>
-                <span className={styles.bullet}>🏆</span>
-                <span className={styles.itemText}>{achievement}</span>
-              </li>
+              <li key={index}>{achievement}</li>
             ))}
           </ul>
         </div>
@@ -252,14 +254,11 @@ export default function Portfolio() {
             <h2 className={styles.title}>Extracurricular Activities</h2>
           </div>
 
-          <div className={styles.activitiesList}>
+          <ul className={styles.simpleList}>
             {activities.map((activity, index) => (
-              <article key={index} className={styles.activityCard}>
-                <h3 className={styles.activityTitle}>{activity.title}</h3>
-                <p className={styles.activityDescription}>{activity.description}</p>
-              </article>
+              <li key={index}>{activity}</li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -267,59 +266,53 @@ export default function Portfolio() {
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.header}>
-            <h2 className={styles.title}>Contact</h2>
+            <h2 className={styles.title}>Contact Information</h2>
           </div>
           
-          <div className={styles.contactGrid}>
-            <a 
-              href="mailto:singhshreyansh0505@gmail.com"
-              className={styles.contactCard}
-              aria-label="Send email to Shreyansh Singh"
-              tabIndex={0}
-            >
-              <div className={styles.contactIcon}>📧</div>
-              <div className={styles.contactInfo}>
-                <div className={styles.contactLabel}>Email</div>
-                <div className={styles.contactValue}>singhshreyansh0505@gmail.com</div>
-              </div>
-            </a>
+          <div className={styles.contactList}>
+            <div className={styles.contactItem}>
+              <span className={styles.contactLabel}>Email:</span>
+              <a 
+                href="mailto:singhshreyansh0505@gmail.com"
+                className={styles.contactLink}
+                aria-label="Send email to Shreyansh Singh"
+                tabIndex={0}
+              >
+                singhshreyansh0505@gmail.com
+              </a>
+            </div>
 
-            <a 
-              href="https://github.com/Shreyansh-5SS"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.contactCard}
-              aria-label="View GitHub profile"
-              tabIndex={0}
-            >
-              <div className={styles.contactIcon}>💻</div>
-              <div className={styles.contactInfo}>
-                <div className={styles.contactLabel}>GitHub</div>
-                <div className={styles.contactValue}>Shreyansh-5SS</div>
-              </div>
-            </a>
+            <div className={styles.contactItem}>
+              <span className={styles.contactLabel}>GitHub:</span>
+              <a 
+                href="https://github.com/Shreyansh-5SS"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+                aria-label="View GitHub profile"
+                tabIndex={0}
+              >
+                github.com/Shreyansh-5SS
+              </a>
+            </div>
 
-            <a 
-              href="https://www.linkedin.com/in/shreyansh-singh-424b0833a/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.contactCard}
-              aria-label="View LinkedIn profile"
-              tabIndex={0}
-            >
-              <div className={styles.contactIcon}>🔗</div>
-              <div className={styles.contactInfo}>
-                <div className={styles.contactLabel}>LinkedIn</div>
-                <div className={styles.contactValue}>Shreyansh Singh</div>
-              </div>
-            </a>
+            <div className={styles.contactItem}>
+              <span className={styles.contactLabel}>LinkedIn:</span>
+              <a 
+                href="https://www.linkedin.com/in/shreyansh-singh-424b0833a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+                aria-label="View LinkedIn profile"
+                tabIndex={0}
+              >
+                linkedin.com/in/shreyansh-singh-424b0833a
+              </a>
+            </div>
 
-            <div className={styles.contactCard}>
-              <div className={styles.contactIcon}>📱</div>
-              <div className={styles.contactInfo}>
-                <div className={styles.contactLabel}>Phone</div>
-                <div className={styles.contactValue}>+91 9026622912</div>
-              </div>
+            <div className={styles.contactItem}>
+              <span className={styles.contactLabel}>Phone:</span>
+              <span className={styles.contactValue}>+91 9026622912</span>
             </div>
           </div>
         </div>

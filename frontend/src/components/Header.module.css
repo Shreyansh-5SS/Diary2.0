@@ -291,11 +291,19 @@
   border-bottom-color: rgba(255, 255, 255, 0.2);
 }
 
-:global(body.theme-work) .logo,
-:global(body.theme-work) .navLink,
-:global(body.theme-work) .hamburgerLine {
+:global(body.theme-work) .logo {
   color: var(--text-light, #fff);
+}
+
+:global(body.theme-work) .navLink {
+  color: var(--text-light, #fff);
+}
+
+:global(body.theme-work) .navIcon {
   stroke: var(--text-light, #fff);
+}
+
+:global(body.theme-work) .hamburgerLine {
   background: var(--text-light, #fff);
 }
 
