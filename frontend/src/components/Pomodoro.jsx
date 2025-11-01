@@ -67,7 +67,8 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
       const endTime = new Date().toISOString()
       const startDate = new Date(startTime)
       const endDate = new Date(endTime)
-      const actualDurationMinutes = Math.ceil((endDate - startDate) / 1000 / 60)
+      const elapsedSeconds = (endDate - startDate) / 1000
+      const actualDurationMinutes = Math.max(1, Math.round(elapsedSeconds / 60))
 
       try {
         const token = localStorage.getItem('token')
@@ -114,8 +115,9 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
     const startDate = new Date(startTime)
     const endDate = new Date(endTime)
     
-    // Calculate actual elapsed time in minutes
-    const actualDurationMinutes = Math.ceil((endDate - startDate) / 1000 / 60)
+    // Calculate actual elapsed time in seconds, then convert to minutes
+    const elapsedSeconds = (endDate - startDate) / 1000
+    const actualDurationMinutes = Math.max(1, Math.round(elapsedSeconds / 60)) // Round to nearest minute, minimum 1
 
     try {
       const token = localStorage.getItem('token')
@@ -130,7 +132,10 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      alert(`Session saved! Duration: ${actualDurationMinutes} minutes`)
+      const displayTime = elapsedSeconds < 60 
+        ? `${Math.round(elapsedSeconds)} seconds (saved as 1 min)`
+        : `${actualDurationMinutes} minutes`
+      alert(`Session saved! Duration: ${displayTime}`)
     } catch (error) {
       console.error('Error saving pomodoro:', error)
       alert('Failed to save session')
