@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
@@ -19,6 +19,7 @@ const CHART_COLORS = [
 export default function Expenses() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   
   const [expenses, setExpenses] = useState([])
   const [summary, setSummary] = useState(null)
@@ -31,14 +32,7 @@ export default function Expenses() {
   const [editingExpense, setEditingExpense] = useState(null)
   const [filterType, setFilterType] = useState('all') // all, earning, expense
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login')
-      return
-    }
-    fetchData()
-  }, [user, selectedMonth, navigate])
-
+  // Function definitions BEFORE useEffect and early returns
   const fetchData = async () => {
     setLoading(true)
     try {
@@ -166,8 +160,21 @@ export default function Expenses() {
     ? expenses 
     : expenses.filter(exp => exp.type === filterType)
 
-  if (loading) {
+  // useEffect and early returns AFTER all function definitions
+  useEffect(() => {
+    if (!user) {
+      navigate('/login', { state: { from: location } })
+      return
+    }
+    fetchData()
+  }, [user, selectedMonth, navigate, location])
+
+  if (loading && !summary) {
     return <div className={styles.loading}>Loading expenses...</div>
+  }
+
+  if (!user) {
+    return null
   }
 
   return (

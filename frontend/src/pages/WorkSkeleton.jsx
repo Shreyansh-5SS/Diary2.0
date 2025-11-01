@@ -1,7 +1,27 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import styles from './WorkSkeleton.module.css'
 
 function WorkSkeleton() {
+  const { isAuthenticated, loading } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      navigate('/login', { state: { from: location } })
+    }
+  }, [isAuthenticated, loading, navigate, location])
+
+  if (loading) {
+    return <div className={styles.pageContainer}>Loading...</div>
+  }
+
+  if (!isAuthenticated) {
+    return null
+  }
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.content}>
@@ -9,9 +29,8 @@ function WorkSkeleton() {
           WORK
         </h1>
         <p className={styles.pageDescription}>
-          Your professional portfolio hub. Showcase your projects with bold, 
-          high-contrast cards. Track your skills, manage your timetable, and 
-          organize tasks on your WorkDesk.
+          Your professional portfolio hub. Projects, skills, timetable, and tasks 
+          will be available here soon.
         </p>
         <p className={styles.pageDescription}>
           Everything you need to present your work with clarity and impact. 

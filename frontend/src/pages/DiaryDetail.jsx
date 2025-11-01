@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
 import styles from '../styles/DiaryDetail.module.css'
@@ -11,16 +11,10 @@ export default function DiaryDetail() {
   const [loading, setLoading] = useState(true)
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const { isAuthenticated, loading: authLoading } = useAuth()
 
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      navigate('/login')
-    } else if (isAuthenticated) {
-      fetchEntry()
-    }
-  }, [id, isAuthenticated, authLoading, navigate])
-
+  // Function definitions BEFORE useEffect and early returns
   const fetchEntry = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/diary/${id}`)
@@ -44,12 +38,20 @@ export default function DiaryDetail() {
     })
   }
 
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      navigate('/login', { state: { from: location } })
+    } else if (isAuthenticated) {
+      fetchEntry()
+    }
+  }, [id, isAuthenticated, authLoading, navigate, location])
+
   if (authLoading || loading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Loading...</div>
-      </div>
-    )
+    return <div className={styles.loading}>Loading...</div>
+  }
+
+  if (!isAuthenticated) {
+    return null
   }
 
   if (!entry) {

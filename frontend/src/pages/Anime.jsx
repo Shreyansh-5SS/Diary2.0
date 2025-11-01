@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import AnimeModal from '../components/AnimeModal'
 import axios from 'axios'
@@ -24,18 +24,7 @@ export default function Anime() {
   const [sortBy, setSortBy] = useState('recent')
   const { isAuthenticated, loading: authLoading } = useAuth()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      navigate('/login')
-    } else if (isAuthenticated) {
-      fetchAnimeList()
-    }
-  }, [isAuthenticated, authLoading, navigate])
-
-  useEffect(() => {
-    applyFiltersAndSort()
-  }, [animeList, selectedGenres, sortBy])
+  const location = useLocation()
 
   const fetchAnimeList = async () => {
     try {
@@ -120,19 +109,36 @@ export default function Anime() {
 
   const renderRating = (rating) => {
     if (!rating) return <span className={styles.noRating}>Not rated</span>
-    
-    return (
-      <div className={styles.ratingStars}>
-        {[1, 2, 3, 4, 5].map(star => (
-          <span
-            key={star}
-            className={star <= rating ? styles.starFilled : styles.starEmpty}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-    )
+
+    const stars = []
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span key={i} className={i <= rating ? styles.starFilled : styles.starEmpty}>
+          ★
+        </span>
+      )
+    }
+    return <div className={styles.starsContainer}>{stars}</div>
+  }
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      navigate('/login', { state: { from: location } })
+    } else if (isAuthenticated) {
+      fetchAnimeList()
+    }
+  }, [isAuthenticated, authLoading, navigate, location])
+
+  useEffect(() => {
+    applyFiltersAndSort()
+  }, [animeList, selectedGenres, sortBy])
+
+  if (authLoading) {
+    return <div className={styles.loading}>Loading...</div>
+  }
+
+  if (!isAuthenticated) {
+    return null
   }
 
   if (authLoading || loading) {

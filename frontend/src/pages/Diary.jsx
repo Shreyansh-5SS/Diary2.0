@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import DiaryModal from '../components/DiaryModal'
 import axios from 'axios'
@@ -14,14 +14,7 @@ export default function Diary() {
   const [editingEntry, setEditingEntry] = useState(null)
   const { isAuthenticated, loading: authLoading } = useAuth()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      navigate('/login')
-    } else if (isAuthenticated) {
-      fetchEntries()
-    }
-  }, [isAuthenticated, authLoading, navigate])
+  const location = useLocation()
 
   const fetchEntries = async () => {
     try {
@@ -88,6 +81,23 @@ export default function Diary() {
   const getExcerpt = (content, maxLength = 200) => {
     if (content.length <= maxLength) return content
     return content.substring(0, maxLength) + '...'
+  }
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      // If not authenticated, redirect to login with return path
+      navigate('/login', { state: { from: location } })
+    } else if (isAuthenticated) {
+      fetchEntries()
+    }
+  }, [isAuthenticated, authLoading, navigate, location])
+
+  if (authLoading) {
+    return <div className={styles.loading}>Loading...</div>
+  }
+
+  if (!isAuthenticated) {
+    return null
   }
 
   if (authLoading || loading) {

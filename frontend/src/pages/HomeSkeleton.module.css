@@ -26,7 +26,59 @@
   font-size: 1.125rem;
   line-height: 1.8;
   color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+  width: 100%;
+}
+
+.navButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: white;
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: transform 150ms ease-out;
+  min-height: 180px;
+}
+
+.navButton:hover {
+  transform: translateY(-4px);
+}
+
+.navButton:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.navIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.navLabel {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.navDescription {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: #666;
+  display: block;
 }
 
 .backButton {

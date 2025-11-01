@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import styles from '../styles/Login.module.css'
 
@@ -11,6 +11,7 @@ export default function Login() {
   
   const { login } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,7 +21,9 @@ export default function Login() {
     const result = await login(email, password)
 
     if (result.success) {
-      navigate('/home')
+      // Redirect to the page they were trying to access, or default to /home
+      const from = location.state?.from?.pathname || '/home'
+      navigate(from, { replace: true })
     } else {
       setError(result.error)
     }

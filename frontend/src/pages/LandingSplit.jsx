@@ -1,17 +1,24 @@
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import styles from './LandingSplit.module.css'
 
 function LandingSplit() {
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
 
   const handleNavigation = (path) => {
-    navigate(path)
+    if (!isAuthenticated) {
+      // Store intended destination and go to login
+      navigate('/login', { state: { from: { pathname: path } } })
+    } else {
+      navigate(path)
+    }
   }
 
   const handleKeyDown = (e, path) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      navigate(path)
+      handleNavigation(path)
     }
   }
 
