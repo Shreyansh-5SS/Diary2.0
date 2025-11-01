@@ -1,0 +1,125 @@
+.splitContainer {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 150ms ease-out;
+}
+
+.half:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.leftHalf {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.rightHalf {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.heading {
+  font-family: var(--font-primary);
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  transition: transform 150ms ease-out;
+  user-select: none;
+}
+
+.half:hover .heading {
+  transform: translateY(-3px);
+}
+
+.subtext {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 400;
+  position: relative;
+  user-select: none;
+}
+
+.subtext::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 200ms ease-out;
+}
+
+.half:hover .subtext::after {
+  width: 100%;
+}
+
+.divider {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100vh;
+  background: var(--border-color);
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.centerLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 8px 16px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: var(--font-primary);
+  z-index: 20;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .splitContainer {
+    flex-direction: column;
+  }
+
+  .divider {
+    width: 100vw;
+    height: 2px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  .centerLabel {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+
+  .heading {
+    font-size: 3rem;
+  }
+
+  .subtext {
+    font-size: 1rem;
+  }
+}

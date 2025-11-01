@@ -1,0 +1,39 @@
+.layoutWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+.mainWithHeader {
+  flex: 1;
+  width: 100%;
+  padding-top: 70px;
+}
+
+/* Theme-specific body styles */
+:global(body.theme-home) {
+  background: var(--bg-light, #faf7f2);
+  color: var(--text-dark, #000);
+}
+
+:global(body.theme-work) {
+  background: var(--bg-dark, #0f172a);
+  color: var(--text-light, #fff);
+}
+
+:global(body.theme-landing) {
+  background: transparent;
+  overflow: hidden;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .mainWithHeader {
+    padding-top: 60px;
+  }
+}

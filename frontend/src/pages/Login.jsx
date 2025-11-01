@@ -1,0 +1,93 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import styles from '../styles/Login.module.css'
+
+export default function Login() {
+  const [email, setEmail] = useState('demo@local')
+  const [password, setPassword] = useState('demo123')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  
+  const { login } = useAuth()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    const result = await login(email, password)
+
+    if (result.success) {
+      navigate('/home')
+    } else {
+      setError(result.error)
+    }
+
+    setLoading(false)
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h1 className={styles.title}>Login</h1>
+        <p className={styles.subtitle}>Shreyansh Personal Diary</p>
+
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.field}>
+            <label htmlFor="email" className={styles.label}>
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={styles.input}
+              placeholder="demo@local"
+              required
+              autoComplete="email"
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="password" className={styles.label}>
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              placeholder="demo123"
+              required
+              autoComplete="current-password"
+            />
+          </div>
+
+          {error && (
+            <div className={styles.error} role="alert">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+
+        <div className={styles.demo}>
+          <p className={styles.demoTitle}>Demo Credentials:</p>
+          <p className={styles.demoText}>Email: demo@local</p>
+          <p className={styles.demoText}>Password: demo123</p>
+        </div>
+      </div>
+    </div>
+  )
+}

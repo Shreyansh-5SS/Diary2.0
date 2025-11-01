@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreyansh Personal Diary - Mockup Index</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #faf7f2 50%, #0f172a 50%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 900px;
+            background: white;
+            border: 2px solid #0a0a0a;
+            padding: 60px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #0a0a0a;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #475569;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+        
+        .section {
+            margin-bottom: 48px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0a0a0a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        
+        .card {
+            border: 1px solid #0a0a0a;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 150ms ease;
+            background: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0a0a0a;
+        }
+        
+        .card-description {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.6;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: #ef4444;
+            color: white;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-secondary {
+            background: #0f172a;
+        }
+        
+        .badge-info {
+            background: #fbbf24;
+            color: #0a0a0a;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 40px;
+            padding: 24px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .stat {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shreyansh Personal Diary</h1>
+        <p class="subtitle">Minimalism + Brutalism Design Mockups</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Mockups</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Documents</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Complete</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🎨 Interactive Mockups</h2>
+            <div class="grid">
+                <a href="desktop-1440px.html" class="card">
+                    <span class="badge">Primary</span>
+                    <div class="card-title">Desktop Mockup</div>
+                    <div class="card-description">
+                        Full 1440px high-fidelity mockup with vertical split landing, HOME screens (diary, anime grid, wallet), and WORK screens (portfolio, projects, WorkDesk).
+                    </div>
+                </a>
+                <a href="mobile-375px.html" class="card">
+                    <span class="badge">Primary</span>
+                    <div class="card-title">Mobile Mockup</div>
+                    <div class="card-description">
+                        Responsive 375px mockup with stacked layout, 2-column grids, and mobile-optimized components. All features adapted for touch.
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📋 Documentation</h2>
+            <div class="grid">
+                <a href="design-system-annotations.md" class="card">
+                    <span class="badge-secondary badge">Design System</span>
+                    <div class="card-title">Design System</div>
+                    <div class="card-description">
+                        Complete specifications: colors, typography, grids, buttons, cards, animations, spacing system, and component specs.
+                    </div>
+                </a>
+                <a href="content-placeholders.md" class="card">
+                    <span class="badge-info badge">Content</span>
+                    <div class="card-title">Content Placeholders</div>
+                    <div class="card-description">
+                        All copy: name, tagline, 3 project descriptions, bio (3 versions), skills, diary entries, anime titles, wallet categories.
+                    </div>
+                </a>
+                <a href="README.md" class="card">
+                    <span class="badge-info badge">Guide</span>
+                    <div class="card-title">README</div>
+                    <div class="card-description">
+                        Complete project overview, design philosophy, how to view mockups, responsive behavior, and implementation notes.
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔖 Quick References</h2>
+            <div class="grid">
+                <a href="SUMMARY.md" class="card">
+                    <span class="badge-info badge">Summary</span>
+                    <div class="card-title">Delivery Summary</div>
+                    <div class="card-description">
+                        Complete checklist of deliverables, design highlights, technical specs, component checklist, and next steps.
+                    </div>
+                </a>
+                <a href="VISUAL-GUIDE.md" class="card">
+                    <span class="badge-info badge">Reference</span>
+                    <div class="card-title">Visual Layout Guide</div>
+                    <div class="card-description">
+                        ASCII diagrams of all layouts, component structures, color maps, typography hierarchy, and grid systems.
+                    </div>
+                </a>
+                <a href="QUICK-REFERENCE.md" class="card">
+                    <span class="badge-info badge">Cheat Sheet</span>
+                    <div class="card-title">Quick Reference Card</div>
+                    <div class="card-description">
+                        Essential specs at a glance: colors, fonts, sizes, spacing, buttons, cards, animations, and component dimensions.
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Shreyansh Personal Diary v1.0</strong></p>
+            <p>Minimalism + Brutalism Design System</p>
+            <p>November 2025 • Created by GitHub Copilot</p>
+            <p style="margin-top: 16px; font-size: 12px;">
+                Repository: Diary2.0 • Owner: Shreyansh-5SS
+            </p>
+        </div>
+    </div>
+</body>
+</html>
