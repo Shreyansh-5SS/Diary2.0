@@ -14,9 +14,9 @@ function Layout({ children }) {
     body.classList.remove('theme-home', 'theme-work', 'theme-landing')
     
     // Add appropriate theme class based on route
-    if (location.pathname === '/home') {
+    if (location.pathname.startsWith('/home')) {
       body.classList.add('theme-home')
-    } else if (location.pathname === '/work') {
+    } else if (location.pathname.startsWith('/work')) {
       body.classList.add('theme-work')
     } else if (location.pathname === '/') {
       body.classList.add('theme-landing')

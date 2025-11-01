@@ -1,11 +1,13 @@
 import express from 'express'
-import { authenticateToken } from '../middleware/auth.js'
-import db from '../db.js'
+import knex from 'knex'
+import knexConfig from '../knexfile.js'
+import { authMiddleware } from '../middleware/auth.js'
 
 const router = express.Router()
+const db = knex(knexConfig.development)
 
 // Get all tasks for user with optional filters
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
   try {
     const { group, status } = req.query
     let query = db('tasks').where({ user_id: req.user.id })
@@ -27,7 +29,7 @@ router.get('/', authenticateToken, async (req, res) => {
 })
 
 // Get single task
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
   try {
     const task = await db('tasks')
       .where({ id: req.params.id, user_id: req.user.id })
@@ -45,7 +47,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 })
 
 // Create task
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const { 
       title, 
@@ -106,7 +108,7 @@ router.post('/', authenticateToken, async (req, res) => {
 })
 
 // Update task
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const { 
       title, 
@@ -183,7 +185,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 })
 
 // Delete task
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const deleted = await db('tasks')
       .where({ id: req.params.id, user_id: req.user.id })
