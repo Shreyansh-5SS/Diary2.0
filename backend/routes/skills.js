@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         db.raw('COALESCE(SUM(pomodoro_sessions.duration_mins), 0) as total_time_mins')
       )
       .leftJoin('pomodoro_sessions', 'skills.id', 'pomodoro_sessions.skill_id')
-      .where('skills.user_id', req.userId)
+      .where('skills.user_id', req.user.id)
       .groupBy('skills.id')
       .orderBy('skills.created_at', 'desc')
 
@@ -40,7 +40,7 @@ router.get('/:id', async (req, res) => {
       .leftJoin('pomodoro_sessions', 'skills.id', 'pomodoro_sessions.skill_id')
       .where({
         'skills.id': req.params.id,
-        'skills.user_id': req.userId
+        'skills.user_id': req.user.id
       })
       .groupBy('skills.id')
       .first()
@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
     }
 
     const [id] = await db('skills').insert({
-      user_id: req.userId,
+      user_id: req.user.id,
       title: title.trim(),
       description: description || null,
       target_hours: target_hours || 0,
@@ -87,7 +87,7 @@ router.put('/:id', async (req, res) => {
     const { title, description, target_hours, learned } = req.body
 
     const skill = await db('skills')
-      .where({ id: req.params.id, user_id: req.userId })
+      .where({ id: req.params.id, user_id: req.user.id })
       .first()
 
     if (!skill) {
@@ -126,7 +126,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const skill = await db('skills')
-      .where({ id: req.params.id, user_id: req.userId })
+      .where({ id: req.params.id, user_id: req.user.id })
       .first()
 
     if (!skill) {
@@ -145,7 +145,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/:id/analytics', async (req, res) => {
   try {
     const skill = await db('skills')
-      .where({ id: req.params.id, user_id: req.userId })
+      .where({ id: req.params.id, user_id: req.user.id })
       .first()
 
     if (!skill) {
@@ -178,7 +178,7 @@ router.get('/:id/analytics', async (req, res) => {
 router.get('/:id/notes', async (req, res) => {
   try {
     const skill = await db('skills')
-      .where({ id: req.params.id, user_id: req.userId })
+      .where({ id: req.params.id, user_id: req.user.id })
       .first()
 
     if (!skill) {
@@ -202,7 +202,7 @@ router.post('/:id/notes', async (req, res) => {
     const { title, body } = req.body
 
     const skill = await db('skills')
-      .where({ id: req.params.id, user_id: req.userId })
+      .where({ id: req.params.id, user_id: req.user.id })
       .first()
 
     if (!skill) {
@@ -233,7 +233,7 @@ router.put('/:skillId/notes/:noteId', async (req, res) => {
     const { title, body } = req.body
 
     const skill = await db('skills')
-      .where({ id: req.params.skillId, user_id: req.userId })
+      .where({ id: req.params.skillId, user_id: req.user.id })
       .first()
 
     if (!skill) {
@@ -272,7 +272,7 @@ router.put('/:skillId/notes/:noteId', async (req, res) => {
 router.delete('/:skillId/notes/:noteId', async (req, res) => {
   try {
     const skill = await db('skills')
-      .where({ id: req.params.skillId, user_id: req.userId })
+      .where({ id: req.params.skillId, user_id: req.user.id })
       .first()
 
     if (!skill) {
