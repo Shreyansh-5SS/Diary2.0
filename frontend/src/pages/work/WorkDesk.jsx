@@ -5,7 +5,6 @@ import axios from 'axios'
 import TaskModal from './TaskModal'
 import TaskDetail from './TaskDetail'
 import Pomodoro from '../../components/Pomodoro'
-import SkillStats from '../../components/SkillStats'
 import styles from './WorkDesk.module.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
@@ -206,9 +205,6 @@ function WorkDesk() {
       </div>
 
       {error && <div className={styles.error}>{error}</div>}
-
-      {/* Skill Stats Panel */}
-      <SkillStats />
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className={styles.board}>

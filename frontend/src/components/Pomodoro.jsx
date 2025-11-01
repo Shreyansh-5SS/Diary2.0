@@ -18,6 +18,7 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
   const [customMinutes, setCustomMinutes] = useState('')
   const [tickSoundEnabled, setTickSoundEnabled] = useState(false)
   const [startTime, setStartTime] = useState(null)
+  const [initialMinutes, setInitialMinutes] = useState(25)
   const intervalRef = useRef(null)
   const tickSoundRef = useRef(null)
 
@@ -55,18 +56,49 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
     }
   }, [isRunning, isPaused, tickSoundEnabled])
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     setIsRunning(false)
     setIsPaused(false)
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
     }
-    alert('Pomodoro complete! ✅')
+    
+    // Auto-save the completed session
+    if (startTime) {
+      const endTime = new Date().toISOString()
+      const startDate = new Date(startTime)
+      const endDate = new Date(endTime)
+      const actualDurationMinutes = Math.ceil((endDate - startDate) / 1000 / 60)
+
+      try {
+        const token = localStorage.getItem('token')
+        await axios.post(
+          `${API_URL}/api/pomodoro`,
+          {
+            task_id: selectedTask?.id || null,
+            skill_id: selectedSkill?.id || null,
+            duration_mins: actualDurationMinutes,
+            started_at: startTime,
+            ended_at: endTime
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        alert(`Pomodoro complete! ✅\nSession saved: ${actualDurationMinutes} minutes`)
+      } catch (error) {
+        console.error('Error saving pomodoro:', error)
+        alert('Pomodoro complete! ✅\n(Failed to save session)')
+      }
+      
+      setStartTime(null)
+    } else {
+      alert('Pomodoro complete! ✅')
+    }
   }
 
   const handleStart = () => {
     if (!isRunning) {
       setStartTime(new Date().toISOString())
+      setInitialMinutes(minutes)
       setIsRunning(true)
       setIsPaused(false)
     }
@@ -80,8 +112,11 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
     if (!startTime) return
 
     const endTime = new Date().toISOString()
-    const totalSeconds = (25 * 60) - (minutes * 60 + seconds)
-    const durationMinutes = Math.ceil(totalSeconds / 60)
+    const startDate = new Date(startTime)
+    const endDate = new Date(endTime)
+    
+    // Calculate actual elapsed time in minutes
+    const actualDurationMinutes = Math.ceil((endDate - startDate) / 1000 / 60)
 
     try {
       const token = localStorage.getItem('token')
@@ -90,13 +125,13 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
         {
           task_id: selectedTask?.id || null,
           skill_id: selectedSkill?.id || null,
-          duration_mins: durationMinutes,
+          duration_mins: actualDurationMinutes,
           started_at: startTime,
           ended_at: endTime
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      alert(`Session saved! Duration: ${durationMinutes} minutes`)
+      alert(`Session saved! Duration: ${actualDurationMinutes} minutes`)
     } catch (error) {
       console.error('Error saving pomodoro:', error)
       alert('Failed to save session')
@@ -107,6 +142,7 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
     setMinutes(25)
     setSeconds(0)
     setStartTime(null)
+    setInitialMinutes(25)
   }
 
   const handlePreset = (presetMinutes) => {
@@ -153,7 +189,7 @@ function Pomodoro({ selectedTask, selectedSkill, onClose }) {
             {selectedTask ? 'Task' : 'Skill'}:
           </span>
           <span className={styles.associationValue}>
-            {selectedTask?.title || selectedSkill?.name}
+            {selectedTask?.title || selectedSkill?.title}
           </span>
         </div>
       )}
