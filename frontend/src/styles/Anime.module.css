@@ -1,0 +1,285 @@
+.container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.addButton {
+  background: var(--bg-dark);
+  color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+}
+
+.filtersSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-light);
+}
+
+.filtersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filtersTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.sortGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.sortSelect {
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  background: white;
+  cursor: pointer;
+}
+
+.genreFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.genreButton {
+  border: 1px solid var(--border-color);
+  background: white;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.genreButton:hover {
+  transform: translateY(-2px);
+}
+
+.genreButton.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.clearButton {
+  border: 1px solid var(--border-color);
+  background: white;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.clearButton:hover {
+  transform: translateY(-2px);
+}
+
+.grid {
+  column-count: 3;
+  column-gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    column-count: 1;
+  }
+}
+
+.card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  background: white;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+.cardImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cardContent {
+  padding: 1.25rem;
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.cardGenres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.genreChip {
+  border: 1px solid var(--border-color);
+  background: var(--bg-light);
+  padding: 0.25rem 0.75rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.cardRating {
+  margin-bottom: 0.5rem;
+}
+
+.ratingLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-right: 0.5rem;
+}
+
+.ratingStars {
+  color: var(--accent);
+  font-size: var(--font-size-md);
+}
+
+.cardStatus {
+  font-size: var(--font-size-sm);
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background: var(--bg-light);
+  border: 1px solid var(--border-color);
+  font-weight: var(--font-weight-medium);
+}
+
+.cardNotes {
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1rem;
+  max-height: 4.8em;
+  overflow: hidden;
+}
+
+.cardActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.editButton,
+.deleteButton {
+  flex: 1;
+  border: 1px solid var(--border-color);
+  background: white;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  transform: translateY(-2px);
+}
+
+.deleteButton {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-light);
+}
+
+.emptyTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.5rem 0;
+}
+
+.emptyText {
+  font-size: var(--font-size-md);
+  color: #555;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: var(--font-size-md);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .filtersSection {
+    padding: 1rem;
+  }
+
+  .genreFilters {
+    gap: 0.5rem;
+  }
+
+  .cardImage {
+    height: 300px;
+  }
+}

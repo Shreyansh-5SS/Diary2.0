@@ -1,0 +1,246 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.modal {
+  background: white;
+  border: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
+}
+
+.form {
+  padding: 1.5rem;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 0.5rem;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  background: white;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.imagePreview {
+  margin-top: 1rem;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.previewImage {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  display: block;
+}
+
+.genreGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.genreOption {
+  border: 1px solid var(--border-color);
+  background: white;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.genreOption:hover {
+  transform: translateY(-2px);
+}
+
+.genreOption.genreSelected {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.ratingSelector {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.ratingSquare {
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--border-color);
+  background: white;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ratingSquare:hover {
+  transform: translateY(-2px);
+}
+
+.ratingSquare.ratingSelected {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.clearRating {
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.error {
+  padding: 0.75rem;
+  border: 1px solid #d32f2f;
+  background: #ffebee;
+  color: #c62828;
+  font-size: var(--font-size-sm);
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancelButton,
+.saveButton {
+  flex: 1;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.cancelButton {
+  background: white;
+}
+
+.saveButton {
+  background: var(--bg-dark);
+  color: var(--bg-light);
+}
+
+.cancelButton:hover,
+.saveButton:hover {
+  transform: translateY(-2px);
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .modal {
+    max-height: 95vh;
+  }
+
+  .header,
+  .form {
+    padding: 1rem;
+  }
+
+  .genreGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .ratingSquare {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
