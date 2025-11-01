@@ -11,6 +11,7 @@ import animeRoutes from './routes/animeRoutes.js'
 import expensesRoutes from './routes/expensesRoutes.js'
 import tasksRoutes from './routes/tasks.js'
 import pomodoroRoutes from './routes/pomodoro.js'
+import skillsRoutes from './routes/skills.js'
 import { authMiddleware } from './middleware/auth.js'
 import { getCurrentUser } from './controllers/authController.js'
 
@@ -49,6 +50,7 @@ app.use('/api/anime', animeRoutes)
 app.use('/api/expenses', expensesRoutes)
 app.use('/api/tasks', tasksRoutes)
 app.use('/api/pomodoro', pomodoroRoutes)
+app.use('/api/skills', skillsRoutes)
 app.use('/api/uploads', uploadRoutes)
 app.get('/api/me', authMiddleware, getCurrentUser)
 

@@ -4,10 +4,6 @@ import styles from './Pomodoro.module.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
-import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import styles from './Pomodoro.module.css';
-
 const PRESETS = [
   { label: 'Focus', minutes: 25 },
   { label: 'Break', minutes: 5 },

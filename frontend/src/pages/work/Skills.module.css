@@ -1,0 +1,120 @@
+/* Skills Page - Brutalist Design */
+
+.skills {
+  min-height: 100vh;
+  background: #936444;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.addButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  background: #1a1a1a;
+  color: white;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+}
+
+.addButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.loading,
+.error {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #1a1a1a;
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border: 2px solid #1a1a1a;
+}
+
+.error {
+  color: #dc2626;
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border: 3px solid #1a1a1a;
+}
+
+.empty p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.emptyButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  background: #1a1a1a;
+  color: white;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.emptyButton:hover {
+  transform: translateY(-2px);
+}
+
+.emptyButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .skills {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

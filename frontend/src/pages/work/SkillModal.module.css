@@ -1,0 +1,203 @@
+/* Skill Modal - Brutalist Design */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modal {
+  background: white;
+  border: 3px solid #1a1a1a;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+}
+
+.closeButton:focus {
+  outline: 2px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.form {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.error {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #dc2626;
+  padding: 0.75rem;
+  background: #fee2e2;
+  border: 2px solid #dc2626;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input,
+.textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 2px solid #1a1a1a;
+  background: white;
+  color: #1a1a1a;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.checkboxField {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+}
+
+.checkbox:focus {
+  outline: 2px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.checkboxLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.cancelButton,
+.submitButton {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex: 1;
+}
+
+.cancelButton {
+  background: white;
+  color: #1a1a1a;
+}
+
+.submitButton {
+  background: #1a1a1a;
+  color: white;
+}
+
+.cancelButton:hover,
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.cancelButton:focus,
+.submitButton:focus {
+  outline: 3px solid #ff6347;
+  outline-offset: 2px;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    max-width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
