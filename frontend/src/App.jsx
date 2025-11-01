@@ -10,6 +10,7 @@ import DiaryDetail from './pages/DiaryDetail'
 import Anime from './pages/Anime'
 import Expenses from './pages/Expenses'
 import Portfolio from './pages/work/Portfolio'
+import WorkDesk from './pages/work/WorkDesk'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/home/anime" element={<Anime />} />
             <Route path="/home/expenses" element={<Expenses />} />
             <Route path="/work" element={<Portfolio />} />
+            <Route path="/work/desk" element={<WorkDesk />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </Layout>
