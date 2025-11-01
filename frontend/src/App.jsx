@@ -12,6 +12,7 @@ import Expenses from './pages/Expenses'
 import Portfolio from './pages/work/Portfolio'
 import WorkDesk from './pages/work/WorkDesk'
 import Skills from './pages/work/Skills'
+import Timetable from './pages/work/Timetable'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/work" element={<Portfolio />} />
             <Route path="/work/desk" element={<WorkDesk />} />
             <Route path="/work/skills" element={<Skills />} />
+            <Route path="/work/timetable" element={<Timetable />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </Layout>

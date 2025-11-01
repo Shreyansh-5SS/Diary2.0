@@ -186,6 +186,14 @@ function WorkDesk() {
             📚 Skills
           </button>
           <button
+            className={styles.timetableButton}
+            onClick={() => navigate('/work/timetable')}
+            aria-label="Go to Timetable"
+            tabIndex={0}
+          >
+            📅 Timetable
+          </button>
+          <button
             className={styles.pomodoroButton}
             onClick={() => setShowPomodoro(true)}
             aria-label="Start Pomodoro"
