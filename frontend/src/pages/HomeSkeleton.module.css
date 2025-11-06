@@ -1,16 +1,39 @@
 .pageContainer {
   min-height: 100vh;
-  background: var(--bg-light);
+  /* Layered background: base warm off-white + subtle navy tint + paper texture */
+  background-color: #faf7f2;
+  background-image: 
+    /* Subtle navy undertone for WORK page connection */
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.015) 0%, rgba(15, 23, 42, 0.025) 100%),
+    /* Paper texture pattern - lightweight CSS noise */
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
   padding: 100px 2rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* Optional: Add subtle warmth via pseudo-element overlay */
+.pageContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at top, rgba(255, 248, 240, 0.4) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .content {
   max-width: 800px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .pageHeading {
@@ -49,6 +72,8 @@
   color: var(--text-dark);
   transition: transform 150ms ease-out;
   min-height: 180px;
+  position: relative;
+  z-index: 1;
 }
 
 .navButton:hover {
@@ -95,6 +120,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: transform 150ms ease-out;
+  position: relative;
+  z-index: 1;
 }
 
 .backButton:hover {
