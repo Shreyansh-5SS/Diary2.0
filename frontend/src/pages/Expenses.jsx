@@ -6,6 +6,7 @@ import { Pie } from 'react-chartjs-2'
 import { useAuth } from '../context/AuthContext'
 import ExpenseModal from '../components/ExpenseModal'
 import styles from '../styles/Expenses.module.css'
+import globalStyles from '../styles/global.module.css'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -178,7 +179,8 @@ export default function Expenses() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={globalStyles.homePageBackground}>
+      <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Wallet & Expenses</h1>
         <div className={styles.headerActions}>
@@ -363,6 +365,7 @@ export default function Expenses() {
           onSave={handleSave}
         />
       )}
+      </div>
     </div>
   )
 }

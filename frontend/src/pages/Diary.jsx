@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import DiaryModal from '../components/DiaryModal'
 import axios from 'axios'
 import styles from '../styles/Diary.module.css'
+import globalStyles from '../styles/global.module.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
@@ -109,7 +110,8 @@ export default function Diary() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={globalStyles.homePageBackground}>
+      <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>My Diary</h1>
         <button onClick={handleCreate} className={styles.createButton}>
@@ -193,6 +195,7 @@ export default function Diary() {
           onSave={handleSave}
         />
       )}
+      </div>
     </div>
   )
 }

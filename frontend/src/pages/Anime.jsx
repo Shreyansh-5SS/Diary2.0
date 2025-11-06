@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import AnimeModal from '../components/AnimeModal'
 import axios from 'axios'
 import styles from '../styles/Anime.module.css'
+import globalStyles from '../styles/global.module.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
@@ -150,7 +151,8 @@ export default function Anime() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={globalStyles.homePageBackground}>
+      <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Anime Watchlist</h1>
         <button onClick={handleCreate} className={styles.createButton}>
@@ -281,6 +283,7 @@ export default function Anime() {
           onSave={handleSave}
         />
       )}
+      </div>
     </div>
   )
 }

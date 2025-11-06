@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import styles from './HomeSkeleton.module.css'
+import globalStyles from '../styles/global.module.css'
 
 function HomeSkeleton() {
   const { isAuthenticated, loading } = useAuth()
@@ -15,7 +16,7 @@ function HomeSkeleton() {
   }, [isAuthenticated, loading, navigate, location])
 
   if (loading) {
-    return <div className={styles.pageContainer}>Loading...</div>
+    return <div className={`${globalStyles.homePageBackground} ${styles.pageContainer}`}>Loading...</div>
   }
 
   if (!isAuthenticated) {
@@ -23,7 +24,7 @@ function HomeSkeleton() {
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={`${globalStyles.homePageBackground} ${styles.pageContainer}`}>
       <div className={styles.content}>
         <h1 className={styles.pageHeading}>
           HOME
