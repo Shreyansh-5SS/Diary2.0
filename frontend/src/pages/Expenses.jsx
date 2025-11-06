@@ -112,6 +112,38 @@ export default function Expenses() {
     window.URL.revokeObjectURL(url)
   }
 
+  const handleImportCSV = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    if (!file.name.endsWith('.csv')) {
+      alert('Please select a CSV file')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('csvFile', file)
+
+    try {
+      const response = await axios.post(`${API_URL}/api/expenses/import-csv`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      alert(`Success! Imported ${response.data.imported} transactions`)
+      fetchData()
+      
+      // Reset file input
+      event.target.value = ''
+    } catch (error) {
+      console.error('CSV import failed:', error)
+      const errorMsg = error.response?.data?.error || 'Failed to import CSV'
+      const details = error.response?.data?.errors?.join('\n') || ''
+      alert(`${errorMsg}${details ? '\n\n' + details : ''}`)
+    }
+  }
+
   const getChartData = () => {
     if (!summary || !summary.categories || summary.categories.length === 0) {
       return null
@@ -190,6 +222,16 @@ export default function Expenses() {
             onChange={(e) => setSelectedMonth(e.target.value)}
             className={styles.monthPicker}
           />
+          <label htmlFor="csv-import" className={styles.importButton}>
+            Import CSV
+            <input
+              id="csv-import"
+              type="file"
+              accept=".csv"
+              onChange={handleImportCSV}
+              style={{ display: 'none' }}
+            />
+          </label>
           <button onClick={handleExportCSV} className={styles.exportButton}>
             Export CSV
           </button>
@@ -211,7 +253,7 @@ export default function Expenses() {
               <div className={styles.cardAmount}>₹{summary.totals.expenses.toFixed(2)}</div>
             </div>
             <div className={`${styles.summaryCard} ${styles.savingsCard}`}>
-              <div className={styles.cardLabel}>Savings</div>
+              <div className={styles.cardLabel}>This Month's Savings</div>
               <div className={styles.cardAmount}>₹{summary.totals.savings.toFixed(2)}</div>
               <div className={styles.savingsPercentage}>
                 {summary.totals.earnings > 0
@@ -219,6 +261,15 @@ export default function Expenses() {
                   : '0%'}
               </div>
             </div>
+            {summary.carryoverInfo && summary.carryoverInfo.amount !== 0 && (
+              <div className={`${styles.summaryCard} ${styles.carryoverCard}`}>
+                <div className={styles.cardLabel}>Total Balance</div>
+                <div className={styles.cardAmount}>₹{summary.totals.totalBalance.toFixed(2)}</div>
+                <div className={styles.carryoverNote}>
+                  Includes ₹{summary.carryoverInfo.amount.toFixed(2)} from {summary.carryoverInfo.previousMonth}
+                </div>
+              </div>
+            )}
           </div>
 
           {summary.categories && summary.categories.length > 0 && (

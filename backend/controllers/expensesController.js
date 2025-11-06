@@ -1,7 +1,24 @@
 import knex from 'knex'
 import knexConfig from '../knexfile.js'
+import multer from 'multer'
+import Papa from 'papaparse'
 
 const db = knex(knexConfig.development)
+
+// Configure multer for CSV uploads (memory storage)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'text/csv' || file.originalname.endsWith('.csv')) {
+      cb(null, true)
+    } else {
+      cb(new Error('Only CSV files are allowed'))
+    }
+  },
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+})
+
+export const uploadMiddleware = upload.single('csvFile')
 
 /**
  * Get all expenses for the authenticated user
@@ -184,6 +201,57 @@ export const deleteExpense = async (req, res) => {
 }
 
 /**
+ * Calculate and store carryover for a given month
+ */
+const calculateCarryover = async (userId, month) => {
+  // Parse month (YYYY-MM)
+  const [year, monthNum] = month.split('-')
+  
+  // Calculate previous month
+  const prevDate = new Date(year, parseInt(monthNum) - 2, 1) // -2 because months are 0-indexed
+  const prevYear = prevDate.getFullYear()
+  const prevMonth = String(prevDate.getMonth() + 1).padStart(2, '0')
+  const prevMonthStr = `${prevYear}-${prevMonth}`
+
+  // Get previous month's transactions
+  const prevStartDate = `${prevYear}-${prevMonth}-01`
+  const prevEndDate = new Date(prevYear, prevDate.getMonth() + 1, 0).toISOString().split('T')[0]
+
+  const prevTransactions = await db('expenses')
+    .where({ user_id: userId })
+    .whereBetween('expense_date', [prevStartDate, prevEndDate])
+
+  const prevEarnings = prevTransactions
+    .filter(t => t.type === 'earning')
+    .reduce((sum, t) => sum + parseFloat(t.amount), 0)
+
+  const prevExpenses = prevTransactions
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + parseFloat(t.amount), 0)
+
+  const prevSavings = prevEarnings - prevExpenses
+
+  // Get previous month's carryover
+  const prevCarryover = await db('monthly_carryover')
+    .where({ user_id: userId, month: prevMonthStr })
+    .first()
+
+  const totalCarryover = (prevCarryover ? parseFloat(prevCarryover.carryover_amount) : 0) + prevSavings
+
+  // Store current month's carryover
+  await db('monthly_carryover')
+    .insert({
+      user_id: userId,
+      month,
+      carryover_amount: totalCarryover
+    })
+    .onConflict(['user_id', 'month'])
+    .merge(['carryover_amount', 'updated_at'])
+
+  return totalCarryover
+}
+
+/**
  * Get monthly summary with totals and category breakdown
  * Query param: month (YYYY-MM, defaults to current month)
  */
@@ -212,13 +280,31 @@ export const getSummary = async (req, res) => {
     // Calculate totals
     const earnings = transactions
       .filter(t => t.type === 'earning')
-      .reduce((sum, t) => sum + parseFloat(t.amount), 0)
+      .reduce((sum, t => sum + parseFloat(t.amount), 0)
 
     const expenses = transactions
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + parseFloat(t.amount), 0)
 
     const savings = earnings - expenses
+
+    // Get or calculate carryover
+    let carryoverRecord = await db('monthly_carryover')
+      .where({ user_id: userId, month })
+      .first()
+
+    if (!carryoverRecord) {
+      // Calculate and store carryover for this month
+      const carryoverAmount = await calculateCarryover(userId, month)
+      carryoverRecord = { carryover_amount: carryoverAmount }
+    }
+
+    const carryover = parseFloat(carryoverRecord.carryover_amount || 0)
+    const totalBalance = carryover + savings
+
+    // Get previous month string for display
+    const prevDate = new Date(year, parseInt(monthNum) - 2, 1)
+    const prevMonthName = prevDate.toLocaleString('default', { month: 'short', year: 'numeric' })
 
     // Category breakdown (expenses only)
     const categoryBreakdown = {}
@@ -247,7 +333,13 @@ export const getSummary = async (req, res) => {
       totals: {
         earnings: parseFloat(earnings.toFixed(2)),
         expenses: parseFloat(expenses.toFixed(2)),
-        savings: parseFloat(savings.toFixed(2))
+        savings: parseFloat(savings.toFixed(2)),
+        carryover: parseFloat(carryover.toFixed(2)),
+        totalBalance: parseFloat(totalBalance.toFixed(2))
+      },
+      carryoverInfo: {
+        amount: parseFloat(carryover.toFixed(2)),
+        previousMonth: prevMonthName
       },
       categories,
       transactionCount: transactions.length
@@ -255,5 +347,107 @@ export const getSummary = async (req, res) => {
   } catch (error) {
     console.error('Get summary error:', error)
     res.status(500).json({ error: 'Failed to fetch summary', message: error.message })
+  }
+}
+
+/**
+ * Import expenses from CSV file
+ * Expected CSV format: Date,Category,Amount,Type,Notes
+ * Type should be 'earning' or 'expense'
+ */
+export const importCSV = async (req, res) => {
+  try {
+    const userId = req.user.id
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'No CSV file uploaded' })
+    }
+
+    const csvData = req.file.buffer.toString('utf8')
+
+    // Parse CSV
+    const parseResult = Papa.parse(csvData, {
+      header: true,
+      skipEmptyLines: true,
+      transformHeader: (header) => header.trim().toLowerCase()
+    })
+
+    if (parseResult.errors.length > 0) {
+      console.error('CSV parse errors:', parseResult.errors)
+      return res.status(400).json({ 
+        error: 'CSV parsing failed', 
+        details: parseResult.errors 
+      })
+    }
+
+    const rows = parseResult.data
+    if (rows.length === 0) {
+      return res.status(400).json({ error: 'CSV file is empty' })
+    }
+
+    // Validate and prepare data
+    const expenses = []
+    const errors = []
+
+    rows.forEach((row, index) => {
+      const lineNum = index + 2 // +2 for header and 0-index
+
+      // Required fields with flexible column names
+      const date = row.date || row.expense_date || row['transaction date']
+      const category = row.category || row.type_category
+      const amount = row.amount
+      const type = (row.type || row.transaction_type || 'expense').toLowerCase()
+      const notes = row.notes || row.description || row.note || ''
+
+      // Validation
+      if (!date) {
+        errors.push(`Line ${lineNum}: Missing date`)
+        return
+      }
+
+      if (!category || !category.trim()) {
+        errors.push(`Line ${lineNum}: Missing category`)
+        return
+      }
+
+      if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+        errors.push(`Line ${lineNum}: Invalid amount '${amount}'`)
+        return
+      }
+
+      if (!['earning', 'expense'].includes(type)) {
+        errors.push(`Line ${lineNum}: Type must be 'earning' or 'expense', got '${type}'`)
+        return
+      }
+
+      expenses.push({
+        user_id: userId,
+        type,
+        category: category.trim(),
+        amount: parseFloat(amount),
+        description: notes.trim() || null,
+        expense_date: date,
+        budget_limit: null
+      })
+    })
+
+    if (errors.length > 0) {
+      return res.status(400).json({ 
+        error: 'CSV validation failed', 
+        errors: errors.slice(0, 10), // Show first 10 errors
+        totalErrors: errors.length
+      })
+    }
+
+    // Batch insert
+    await db('expenses').insert(expenses)
+
+    res.json({ 
+      message: 'CSV imported successfully', 
+      imported: expenses.length 
+    })
+  } catch (error) {
+    console.error('CSV import error:', error)
+    res.status(500).json({ error: 'Failed to import CSV', message: error.message })
   }
 }

@@ -5,7 +5,9 @@ import {
   createExpense,
   updateExpense,
   deleteExpense,
-  getSummary
+  getSummary,
+  importCSV,
+  uploadMiddleware
 } from '../controllers/expensesController.js'
 import { authMiddleware } from '../middleware/auth.js'
 
@@ -13,6 +15,9 @@ const router = express.Router()
 
 // All routes require authentication
 router.use(authMiddleware)
+
+// CSV import (with file upload middleware)
+router.post('/import-csv', uploadMiddleware, importCSV)
 
 // Get monthly summary
 router.get('/summary', getSummary)

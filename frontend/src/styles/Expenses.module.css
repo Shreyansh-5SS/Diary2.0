@@ -40,6 +40,7 @@
   cursor: pointer;
 }
 
+.importButton,
 .exportButton,
 .addButton {
   border: 1px solid var(--border-color);
@@ -52,11 +53,17 @@
   background: white;
 }
 
+.importButton {
+  display: inline-block;
+  text-align: center;
+}
+
 .addButton {
   background: var(--bg-dark);
   color: var(--bg-light);
 }
 
+.importButton:hover,
 .exportButton:hover,
 .addButton:hover {
   transform: translateY(-2px);
@@ -102,9 +109,21 @@
   color: #4169E1;
 }
 
+.carryoverCard .cardAmount {
+  color: #9370DB;
+}
+
 .savingsPercentage {
   font-size: var(--font-size-sm);
   color: #555;
+}
+
+.carryoverNote {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  font-style: italic;
+  line-height: 1.4;
 }
 
 .breakdown {
